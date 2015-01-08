@@ -26,15 +26,24 @@ class Digital(object):
         4: {"left": [(5, 8), (4, 7), (3, 6), (2, 5), (1, 4), (5, 7), (5, 6),
                      (5, 5), (5, 4), (5, 3), (5, 2), (5, 1), (2, 4), (3, 4),
                      (4, 4), (6, 4), (7, 4)]
-            }
+            },
+        5: {"left": [(2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8),
+                     (2, 7), (2, 6), (2, 5), (3, 5), (4, 5), (5, 5),
+                     (6, 5), (7, 5), (7, 4), (7, 3), (7, 2), (7, 1),
+                     (6, 1), (5, 1), (4, 1), (3, 1), (2, 1)]
+            },
     }
 
     def __init__(self):
         self.light = Light()
 
     def run(self):
-        for p in self.DIGITAL_MAP[2]['left']:
-            self.light.light_on(Point(p[0], p[1]))
+        for i in range(1, 6):
+            for p in self.DIGITAL_MAP[i]['left']:
+                self.light.light_on(Point(p[0], p[1]))
+            bcm.delay(800)
+            for p in self.DIGITAL_MAP[i]['left']:
+                self.light.light_off(Point(p[0], p[1]))
 
 if __name__ == "__main__":
     di = Digital()
