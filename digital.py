@@ -61,12 +61,20 @@ class Digital(object):
         self.light = Light()
 
     def run(self):
-        for i in range(0, 10):
-            for p in self.DIGITAL_MAP[i]['left']:
-                self.light.light_on(Point(p[0], p[1]))
-            bcm.delay(800)
-            for p in self.DIGITAL_MAP[i]['left']:
-                self.light.light_off(Point(p[0], p[1]))
+        while True:
+            for i in range(9, -1, -1):
+                p_l = self.DIGITAL_MAP[i]['left']
+                for p in p_l:
+                    self.light.light_on(Point(p[0], p[1]))
+                for j in range(9, -1, -1):
+                    p_r = self.DIGITAL_MAP[j]['left']
+                    for p in p_r:
+                        self.light.light_on(Point(p[0] + 8, p[1]))
+                    bcm.delay(100)
+                    for p in p_r:
+                        self.light.light_off(Point(p[0] + 8, p[1]))
+                for p in p_l:
+                    self.light.light_off(Point(p[0], p[1]))
 
 if __name__ == "__main__":
     di = Digital()
