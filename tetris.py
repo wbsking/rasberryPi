@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 import random
 import sys
@@ -28,24 +28,83 @@ class Shape(object):
         pass
 
     def change_i_shape(self):
+        '''
+            shape_type: 0
+                |
+            shape_type: 1
+                -
+        '''
         point_list = self.current_shape['points']
         shape_type = self.current_shape['type']
         if shape_type == 0:
-            self.current_shape = 1
+            shape_type = 1
             x, y = point_list[-1][0], point_list[-1][1]
             points = [(x, y), (x, y - 1), (x, y - 2), (x, y - 3)]
-            self.current_shape['points'] = points
-        if shape_type == 1:
-            self.current_shape = 0
+        else:
+            shape_type = 0
             x, y = point_list[0][0], point_list[0][1]
             points = [(x, y), (x + 1, y), (x + 2, y), (x + 3, y)]
-            self.current_shape['points'] = points
+        self.current_shape['type'] = shape_type
+        self.current_shape['points'] = points
 
     def change_o_shape(self):
         return
 
     def change_l_shape(self):
-        pass
+        '''
+            shape_type: 0
+                #
+                #
+                ###
+            shape_type: 1
+                #####
+                #
+            shape_type: 2
+                ###
+                  #
+                  #
+            shape_type: 3
+                    #
+                #####
+        '''
+        point_list = self.current_shape['points']
+        shape_type = self.current_shape['type']
+        if shape_type == 0:
+            shape_type = 1
+            x, y = point_list[2][0], point_list[2][1]
+            points = [(x, y), (x + 1, y), (x + 1, y - 1), (x + 1, y - 2)]
+        elif shape_type == 1:
+            shape_type = 2
+            x, y = point_list[0][0], point_list[0][1]
+            points = [(x + 2, y), (x + 2, y - 1), (x + 1, y - 1), (x, y - 1)]
+        elif shape_type == 2:
+            shape_type = 3
+            x, y = point_list[-1][0], point_list[-1][1]
+            points = [(x + 1, y), (x, y), (x, y + 1), (x, y + 2)]
+        else:
+            shape_type = 0
+            x, y = point_list[-1][0], point_list[-1][1]
+            points = [(x + 2, y), (x + 1, y), (x, y), (x, y - 1)]
+        self.current_shape['type'] = shape_type
+        self.current_shape['points'] = points
+
+    def change_j_shape(self):
+        '''
+            shape_type: 0
+                #
+                #
+               ##
+            shape_type: 1
+                #
+                ######
+            shape_type: 2
+                ###
+                #
+                #
+            shape_type: 3
+                ######
+                     #
+        '''
 
     def get_random_shape(self):
         return random.choice(self.SHAPE_LIST)
@@ -59,4 +118,3 @@ class Tetris(object):
         for i in range(1, 17):
             for j in range(1, 9):
                 self.light.light_off(Point(i, j))
-    
