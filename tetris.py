@@ -105,6 +105,27 @@ class Shape(object):
                 ######
                      #
         '''
+        point_list = self.current_shape['points']
+        shape_type = self.current_shape['type']
+        if shape_type == 0:
+            shape_type = 1
+            x, y = point_list[2][0], point_list[2][1]
+            points = [(x + 1, y), (x, y), (x, y - 1), (x, y - 2)]
+        elif shape_type == 1:
+            shape_type = 2
+            x, y = point_list[1][0], point_list[1][1]
+            points = [(x, y), (x + 1, y), (x + 2, y), (x + 2, y - 1)]
+        elif shape_type == 2:
+            shape_type = 3
+            x, y = point_list[0][0], point_list[0][1]
+            points = [(x + 1, y), (x + 1, y - 1), (x + 1, y - 2), (x, y - 2)]
+        else:
+            shape_type = 0
+            x, y = point_list[0][0], point_list[0][1]
+            points = [(x + 1, y), (x, y), (x - 1, y), (x - 1, y + 1)]
+
+        self.current_shape['type'] = shape_type
+        self.current_shape['points'] = points
 
     def get_random_shape(self):
         return random.choice(self.SHAPE_LIST)
