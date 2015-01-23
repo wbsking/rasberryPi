@@ -15,7 +15,7 @@ class Shape(object):
     O_SHAPE = [(16, 5), (16, 4), (15, 5), (15, 4)]
     L_SHAPE = [(16, 5), (15, 5), (14, 5), (14, 4)]
     J_SHAPE = [(16, 4), (15, 4), (14, 4), (14, 5)]
-    S_SHAPE = [(16, 4), (16, 3), (15, 4), (15, 5)]
+    S_SHAPE = [(16, 3), (16, 4), (15, 4), (15, 5)]
     Z_SHAPE = [(16, 5), (16, 4), (15, 4), (15, 3)]
     T_SHAPE = [(16, 4), (15, 4), (15, 5), (15, 3)]
 
@@ -124,6 +124,29 @@ class Shape(object):
             x, y = point_list[0][0], point_list[0][1]
             points = [(x + 1, y), (x, y), (x - 1, y), (x - 1, y + 1)]
 
+        self.current_shape['type'] = shape_type
+        self.current_shape['points'] = points
+
+    def change_s_shape(self):
+        """
+            shape_type: 0
+                 ###
+               ###
+            shape_type: 1
+                #
+                ##
+                 #
+        """
+        point_list = self.current_shape['points']
+        shape_type = self.current_shape['type']
+        if shape_type == 0:
+            shape_type = 1
+            x, y = point_list[-1][0], point_list[-1][1]
+            points = [(x + 2, y), (x + 1, y), (x + 1, y - 1), (x + 1, y)]
+        else:
+            shape_type = 0
+            x, y = point_list[-1][0], point_list[-1][1]
+            points = [(x + 1, y), (x + 1, y + 1), (x, y + 1), (x, y + 2)]
         self.current_shape['type'] = shape_type
         self.current_shape['points'] = points
 
